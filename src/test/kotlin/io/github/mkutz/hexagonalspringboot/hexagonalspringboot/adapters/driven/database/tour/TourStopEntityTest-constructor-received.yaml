@@ -1,0 +1,43 @@
+---
+id: "00000000-0000-0000-0000-000000000001"
+tourId: "00000000-0000-0000-0000-000000000002"
+customerName: "Default Customer"
+address: "Some Address"
+longitude: "0.0"
+latitude: "0.0"
+deliveryItems:
+- id: "6209bd2b-5a75-4f5e-9e5f-19409b11cd58"
+  tourStopId: "00000000-0000-0000-0000-000000000001"
+  articleId: "b17aa3ec-9e18-4c52-9104-ac73301b6ad5"
+  quantity: 1
+  unit: "PIECE"
+- id: "475fc6d0-4953-43e1-9807-f8f81f5c6325"
+  tourStopId: "00000000-0000-0000-0000-000000000001"
+  articleId: "622997ce-5e13-4a1a-ba4f-052a049175f2"
+  quantity: 1
+  unit: "PIECE"
+- id: "274eec8a-787c-4ee6-bdbb-be8b1f8f4691"
+  tourStopId: "00000000-0000-0000-0000-000000000001"
+  articleId: "bc8fcecc-ec18-4852-96ed-1b6742e472cf"
+  quantity: 1
+  unit: "PIECE"
+- id: "85c61d82-0e17-411b-9c0c-82bfaffd9b06"
+  tourStopId: "00000000-0000-0000-0000-000000000001"
+  articleId: "c1762291-1a45-4612-8739-3626722dc7a7"
+  quantity: 1
+  unit: "PIECE"
+- id: "2232ce4f-830f-4838-9b04-ce6e30f07e24"
+  tourStopId: "00000000-0000-0000-0000-000000000001"
+  articleId: "6614dae0-5dda-4aaf-b184-03fa8dacfa54"
+  quantity: 1
+  unit: "PIECE"
+- id: "f27c46ce-6927-459c-b8b4-e5beebc18eb9"
+  tourStopId: "00000000-0000-0000-0000-000000000001"
+  articleId: "ce4f9245-9d3a-459e-83c9-5327021eaeb1"
+  quantity: 1
+  unit: "PIECE"
+- id: "841fb565-08eb-44d9-a039-a1ee5f1ae742"
+  tourStopId: "00000000-0000-0000-0000-000000000001"
+  articleId: "15625864-f1b8-476c-8011-2190834629d2"
+  quantity: 1
+  unit: "PIECE"

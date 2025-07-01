@@ -1,0 +1,36 @@
+[versions]
+approvej = "0.8.6"
+assertj = "3.27.3"
+javaVersion = "21"
+junit = "5.12.2"
+kotlin = "1.9.25"
+spotless = "7.0.3"
+springBoot = "3.5.0"
+springDependencyManagement = "1.1.7"
+
+[libraries]
+approvej-core = { module = "org.approvej:core", version.ref = "approvej" }
+approvej-yaml-jackson = { module = "org.approvej:yaml-jackson", version.ref = "approvej" }
+approvej-json-jackson = { module = "org.approvej:json-jackson", version.ref = "approvej" }
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
+postgresql = { module = "org.postgresql:postgresql" }
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-kafka = { module = "org.springframework.kafka:spring-kafka" }
+spring-kafka-test = { module = "org.springframework.kafka:spring-kafka-test" }
+
+[plugins]
+kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }

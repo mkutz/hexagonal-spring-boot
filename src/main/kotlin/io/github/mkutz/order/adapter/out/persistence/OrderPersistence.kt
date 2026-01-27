@@ -7,18 +7,17 @@ import kotlin.jvm.optionals.getOrNull
 import org.springframework.stereotype.Repository
 
 @Repository
-class OrderPersistenceAdapter(
-  private val orderJpaRepository: OrderJpaRepository,
-  private val mapper: OrderPersistenceMapper,
-) : ToLoadOrders, ToSaveOrders {
+class OrderPersistence(private val orderRepository: OrderRepository) : ToLoadOrders, ToSaveOrders {
 
   override fun loadOrder(orderId: Order.Id): Order? {
-    return orderJpaRepository.findById(orderId.value).getOrNull()?.let { mapper.toDomain(it) }
+    return orderRepository.findById(orderId.value).getOrNull()?.let {
+      OrderPersistenceMapper.toDomain(it)
+    }
   }
 
   override fun saveOrder(order: Order): Order {
-    val entity = mapper.toEntity(order)
-    val savedEntity = orderJpaRepository.save(entity)
-    return mapper.toDomain(savedEntity)
+    val entity = OrderPersistenceMapper.toEntity(order)
+    val savedEntity = orderRepository.save(entity)
+    return OrderPersistenceMapper.toDomain(savedEntity)
   }
 }

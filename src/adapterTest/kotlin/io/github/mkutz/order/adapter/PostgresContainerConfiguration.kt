@@ -16,5 +16,7 @@ class PostgresContainerConfiguration {
       PostgreSQLContainer("postgres:16-alpine").apply { start() }
   }
 
-  @Bean @ServiceConnection fun postgresContainer(): PostgreSQLContainer<*> = postgresContainer
+  @Bean
+  @ServiceConnection(name = "postgres")
+  fun postgresContainer(): PostgreSQLContainer<*> = postgresContainer
 }

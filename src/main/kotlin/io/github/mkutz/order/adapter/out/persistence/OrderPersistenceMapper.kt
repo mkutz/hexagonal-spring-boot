@@ -4,13 +4,11 @@ import io.github.mkutz.order.application.article.Article
 import io.github.mkutz.order.application.article.Money
 import io.github.mkutz.order.application.order.Order
 import java.util.Currency
-import org.springframework.stereotype.Component
 
-@Component
-class OrderPersistenceMapper {
+object OrderPersistenceMapper {
 
-  fun toEntity(order: Order): OrderJpaEntity {
-    val entity = OrderJpaEntity(id = order.id.value, status = toStatusJpa(order.status))
+  fun toEntity(order: Order): OrderEntity {
+    val entity = OrderEntity(id = order.id.value, status = toEntityStatus(order.status))
     order.items.forEach { item ->
       val itemEntity = toItemEntity(item)
       itemEntity.order = entity
@@ -19,7 +17,7 @@ class OrderPersistenceMapper {
     return entity
   }
 
-  fun toDomain(entity: OrderJpaEntity): Order {
+  fun toDomain(entity: OrderEntity): Order {
     return Order(
       id = Order.Id(entity.id),
       status = toStatus(entity.status),
@@ -27,8 +25,8 @@ class OrderPersistenceMapper {
     )
   }
 
-  private fun toItemEntity(item: Order.Item): OrderItemJpaEntity {
-    return OrderItemJpaEntity(
+  private fun toItemEntity(item: Order.Item): OrderEntity.ItemEntity {
+    return OrderEntity.ItemEntity(
       articleId = item.articleId.value,
       articleName = item.articleName,
       quantity = item.quantity,
@@ -37,7 +35,7 @@ class OrderPersistenceMapper {
     )
   }
 
-  private fun toDomainItem(entity: OrderItemJpaEntity): Order.Item {
+  private fun toDomainItem(entity: OrderEntity.ItemEntity): Order.Item {
     return Order.Item(
       articleId = Article.Id(entity.articleId),
       articleName = entity.articleName,
@@ -46,23 +44,23 @@ class OrderPersistenceMapper {
     )
   }
 
-  private fun toStatusJpa(status: Order.Status): OrderStatusJpa {
+  private fun toEntityStatus(status: Order.Status): OrderEntity.Status {
     return when (status) {
-      Order.Status.CREATED -> OrderStatusJpa.CREATED
-      Order.Status.PAYMENT_CONFIRMED -> OrderStatusJpa.PAYMENT_CONFIRMED
-      Order.Status.SHIPPED -> OrderStatusJpa.SHIPPED
-      Order.Status.DELIVERED -> OrderStatusJpa.DELIVERED
-      Order.Status.CANCELLED -> OrderStatusJpa.CANCELLED
+      Order.Status.CREATED -> OrderEntity.Status.CREATED
+      Order.Status.PAYMENT_CONFIRMED -> OrderEntity.Status.PAYMENT_CONFIRMED
+      Order.Status.SHIPPED -> OrderEntity.Status.SHIPPED
+      Order.Status.DELIVERED -> OrderEntity.Status.DELIVERED
+      Order.Status.CANCELLED -> OrderEntity.Status.CANCELLED
     }
   }
 
-  private fun toStatus(status: OrderStatusJpa): Order.Status {
+  private fun toStatus(status: OrderEntity.Status): Order.Status {
     return when (status) {
-      OrderStatusJpa.CREATED -> Order.Status.CREATED
-      OrderStatusJpa.PAYMENT_CONFIRMED -> Order.Status.PAYMENT_CONFIRMED
-      OrderStatusJpa.SHIPPED -> Order.Status.SHIPPED
-      OrderStatusJpa.DELIVERED -> Order.Status.DELIVERED
-      OrderStatusJpa.CANCELLED -> Order.Status.CANCELLED
+      OrderEntity.Status.CREATED -> Order.Status.CREATED
+      OrderEntity.Status.PAYMENT_CONFIRMED -> Order.Status.PAYMENT_CONFIRMED
+      OrderEntity.Status.SHIPPED -> Order.Status.SHIPPED
+      OrderEntity.Status.DELIVERED -> Order.Status.DELIVERED
+      OrderEntity.Status.CANCELLED -> Order.Status.CANCELLED
     }
   }
 }

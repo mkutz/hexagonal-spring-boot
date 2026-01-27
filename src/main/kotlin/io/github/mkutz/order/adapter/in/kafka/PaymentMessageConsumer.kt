@@ -6,10 +6,7 @@ import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 
 @Component
-class PaymentMessageConsumer(
-  private val toManageOrders: ToManageOrders,
-  private val mapper: PaymentMessageMapper,
-) {
+class PaymentMessageConsumer(private val toManageOrders: ToManageOrders) {
   private val logger = LoggerFactory.getLogger(javaClass)
 
   @KafkaListener(
@@ -18,7 +15,7 @@ class PaymentMessageConsumer(
   )
   fun onPaymentConfirmed(message: PaymentConfirmedMessage) {
     logger.info("Received payment confirmed message for order: ${message.orderId}")
-    val orderId = mapper.toOrderId(message)
+    val orderId = PaymentMessageMapper.toOrderId(message)
     toManageOrders.confirmPayment(orderId)
     logger.info("Payment confirmed for order: ${message.orderId}")
   }

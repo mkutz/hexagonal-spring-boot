@@ -9,7 +9,7 @@ import java.util.UUID
 
 @Entity
 @Table(name = "articles")
-class ArticleJpaEntity(
+class ArticleEntity(
   @Id val id: UUID,
   @Column(nullable = false) val name: String,
   @Column(nullable = false) val priceAmount: BigDecimal,

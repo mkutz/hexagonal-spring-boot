@@ -4,7 +4,7 @@ import io.github.mkutz.order.application.order.Order
 import java.util.UUID
 
 class ShipmentBuilder {
-  var id: ShipmentId = ShipmentId(UUID.randomUUID())
+  var id: Shipment.Id = Shipment.Id(UUID.randomUUID())
   var orderId: Order.Id = Order.Id(UUID.randomUUID())
   var trackingNumber: TrackingNumber =
     TrackingNumber("TRACK-${UUID.randomUUID().toString().take(8).uppercase()}")

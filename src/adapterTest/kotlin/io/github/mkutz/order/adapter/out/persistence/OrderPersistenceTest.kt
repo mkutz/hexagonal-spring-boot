@@ -16,9 +16,7 @@ import org.springframework.test.context.ActiveProfiles
 @SpringBootTest
 @ActiveProfiles("adapter-test")
 @Import(PostgresContainerConfiguration::class, KafkaContainerConfiguration::class)
-class OrderPersistenceAdapterTest
-@Autowired
-constructor(private val orderPersistenceAdapter: OrderPersistenceAdapter) {
+class OrderPersistenceTest @Autowired constructor(private val orderPersistence: OrderPersistence) {
 
   @Test
   fun `saveOrder persists order and returns it`() {
@@ -30,7 +28,7 @@ constructor(private val orderPersistenceAdapter: OrderPersistenceAdapter) {
         )
     }
 
-    val savedOrder = orderPersistenceAdapter.saveOrder(order)
+    val savedOrder = orderPersistence.saveOrder(order)
 
     assertThat(savedOrder.id).isEqualTo(order.id)
     assertThat(savedOrder.status).isEqualTo(order.status)
@@ -40,9 +38,9 @@ constructor(private val orderPersistenceAdapter: OrderPersistenceAdapter) {
   @Test
   fun `loadOrder returns order when exists`() {
     val order = anOrder()
-    orderPersistenceAdapter.saveOrder(order)
+    orderPersistence.saveOrder(order)
 
-    val loadedOrder = orderPersistenceAdapter.loadOrder(order.id)
+    val loadedOrder = orderPersistence.loadOrder(order.id)
 
     assertThat(loadedOrder).isNotNull
     assertThat(loadedOrder?.id).isEqualTo(order.id)
@@ -53,7 +51,7 @@ constructor(private val orderPersistenceAdapter: OrderPersistenceAdapter) {
   fun `loadOrder returns null when order does not exist`() {
     val nonExistentId = Order.Id(UUID.randomUUID())
 
-    val loadedOrder = orderPersistenceAdapter.loadOrder(nonExistentId)
+    val loadedOrder = orderPersistence.loadOrder(nonExistentId)
 
     assertThat(loadedOrder).isNull()
   }
@@ -61,12 +59,12 @@ constructor(private val orderPersistenceAdapter: OrderPersistenceAdapter) {
   @Test
   fun `saveOrder updates existing order`() {
     val order = anOrder { status = Order.Status.CREATED }
-    orderPersistenceAdapter.saveOrder(order)
+    orderPersistence.saveOrder(order)
 
     val updatedOrder = order.copy(status = Order.Status.PAYMENT_CONFIRMED)
-    orderPersistenceAdapter.saveOrder(updatedOrder)
+    orderPersistence.saveOrder(updatedOrder)
 
-    val loadedOrder = orderPersistenceAdapter.loadOrder(order.id)
+    val loadedOrder = orderPersistence.loadOrder(order.id)
     assertThat(loadedOrder?.status).isEqualTo(Order.Status.PAYMENT_CONFIRMED)
   }
 }

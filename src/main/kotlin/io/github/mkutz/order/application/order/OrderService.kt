@@ -1,7 +1,9 @@
 package io.github.mkutz.order.application.order
 
 import io.github.mkutz.order.application.article.Article
+import org.springframework.stereotype.Service
 
+@Service
 class OrderService {
 
   fun createOrder(articles: List<Pair<Article, Int>>): Order {

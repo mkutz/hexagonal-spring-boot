@@ -13,10 +13,10 @@ import org.springframework.test.context.ActiveProfiles
 @SpringBootTest
 @ActiveProfiles("adapter-test")
 @Import(PostgresContainerConfiguration::class, KafkaContainerConfiguration::class)
-class OrderMessageKafkaAdapterTest
+class OrderMessagePublisherTest
 @Autowired
 constructor(
-  private val orderMessageKafkaAdapter: OrderMessageKafkaAdapter,
+  private val orderMessagePublisher: OrderMessagePublisher,
   private val kafkaTemplate: KafkaTemplate<String, Any>,
 ) {
 
@@ -24,7 +24,7 @@ constructor(
   fun `publishOrderCreated sends message to Kafka`() {
     val order = anOrder()
 
-    orderMessageKafkaAdapter.publishOrderCreated(order)
+    orderMessagePublisher.publishOrderCreated(order)
 
     kafkaTemplate.flush()
   }
@@ -33,7 +33,7 @@ constructor(
   fun `publishOrderCancelled sends message to Kafka`() {
     val order = anOrder()
 
-    orderMessageKafkaAdapter.publishOrderCancelled(order)
+    orderMessagePublisher.publishOrderCancelled(order)
 
     kafkaTemplate.flush()
   }
@@ -42,7 +42,7 @@ constructor(
   fun `publishPaymentConfirmed sends message to Kafka`() {
     val order = anOrder()
 
-    orderMessageKafkaAdapter.publishPaymentConfirmed(order)
+    orderMessagePublisher.publishPaymentConfirmed(order)
 
     kafkaTemplate.flush()
   }

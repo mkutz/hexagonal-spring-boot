@@ -52,8 +52,7 @@ class OrderApplicationService(
 
   override fun cancelOrder(orderId: Order.Id): Order {
     val order =
-      toLoadOrders.loadOrder(orderId)
-        ?: throw IllegalArgumentException("Order not found: $orderId")
+      toLoadOrders.loadOrder(orderId) ?: throw IllegalArgumentException("Order not found: $orderId")
 
     val cancelledOrder = order.cancel()
     val savedOrder = toSaveOrders.saveOrder(cancelledOrder)
@@ -64,8 +63,7 @@ class OrderApplicationService(
 
   override fun confirmPayment(orderId: Order.Id): Order {
     val order =
-      toLoadOrders.loadOrder(orderId)
-        ?: throw IllegalArgumentException("Order not found: $orderId")
+      toLoadOrders.loadOrder(orderId) ?: throw IllegalArgumentException("Order not found: $orderId")
 
     val confirmedOrder = order.confirmPayment()
     val savedOrder = toSaveOrders.saveOrder(confirmedOrder)

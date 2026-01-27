@@ -15,5 +15,5 @@ class KafkaContainerConfiguration {
     val kafkaContainer: KafkaContainer = KafkaContainer("apache/kafka:3.8.0").apply { start() }
   }
 
-  @Bean @ServiceConnection fun kafkaContainer(): KafkaContainer = kafkaContainer
+  @Bean @ServiceConnection(name = "kafka") fun kafkaContainer(): KafkaContainer = kafkaContainer
 }

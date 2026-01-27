@@ -6,17 +6,16 @@ import kotlin.jvm.optionals.getOrNull
 import org.springframework.stereotype.Repository
 
 @Repository
-class ArticlePersistenceAdapter(
-  private val articleJpaRepository: ArticleJpaRepository,
-  private val mapper: ArticlePersistenceMapper,
-) : ToLoadArticles {
+class ArticleLoader(private val articleRepository: ArticleRepository) : ToLoadArticles {
 
   override fun loadArticle(articleId: Article.Id): Article? {
-    return articleJpaRepository.findById(articleId.value).getOrNull()?.let { mapper.toDomain(it) }
+    return articleRepository.findById(articleId.value).getOrNull()?.let {
+      ArticlePersistenceMapper.toDomain(it)
+    }
   }
 
   override fun loadArticles(articleIds: List<Article.Id>): List<Article> {
     val uuids = articleIds.map { it.value }
-    return articleJpaRepository.findAllById(uuids).map { mapper.toDomain(it) }
+    return articleRepository.findAllById(uuids).map { ArticlePersistenceMapper.toDomain(it) }
   }
 }

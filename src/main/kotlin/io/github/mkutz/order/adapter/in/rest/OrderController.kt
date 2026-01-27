@@ -15,16 +15,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/orders")
-class OrderController(
-  private val toManageOrders: ToManageOrders,
-  private val mapper: OrderRestMapper,
-) {
+class OrderController(private val toManageOrders: ToManageOrders) {
 
   @PostMapping
   fun createOrder(@RequestBody request: CreateOrderRequest): ResponseEntity<OrderResponse> {
-    val orderItems = mapper.toOrderItemRequests(request)
+    val orderItems = OrderRestMapper.toOrderItemRequests(request)
     val order = toManageOrders.createOrder(orderItems)
-    return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(order))
+    return ResponseEntity.status(HttpStatus.CREATED).body(OrderRestMapper.toResponse(order))
   }
 
   @GetMapping("/{orderId}")
@@ -32,12 +29,12 @@ class OrderController(
     val order =
       toManageOrders.getOrder(Order.Id(UUID.fromString(orderId)))
         ?: return ResponseEntity.notFound().build()
-    return ResponseEntity.ok(mapper.toResponse(order))
+    return ResponseEntity.ok(OrderRestMapper.toResponse(order))
   }
 
   @DeleteMapping("/{orderId}")
   fun cancelOrder(@PathVariable orderId: String): ResponseEntity<OrderResponse> {
     val order = toManageOrders.cancelOrder(Order.Id(UUID.fromString(orderId)))
-    return ResponseEntity.ok(mapper.toResponse(order))
+    return ResponseEntity.ok(OrderRestMapper.toResponse(order))
   }
 }

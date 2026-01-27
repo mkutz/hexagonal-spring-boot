@@ -21,12 +21,12 @@ java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 repositories { mavenCentral() }
 
 dependencies {
-  implementation(libs.spring.boot.starter.web)
+  implementation(libs.spring.boot.starter.webmvc)
   implementation(libs.spring.boot.starter.data.jpa)
   implementation(libs.spring.kafka)
   implementation(libs.jackson.module.kotlin)
   implementation(libs.kotlin.reflect)
-  implementation(libs.flyway.core)
+  implementation(libs.spring.boot.starter.flyway)
   implementation(libs.flyway.database.postgresql)
 
   runtimeOnly(libs.postgresql)
@@ -57,8 +57,11 @@ testing {
           implementation(project())
           implementation(testFixtures(project()))
           implementation(libs.spring.boot.starter.test)
+          implementation(libs.spring.boot.starter.webmvc.test)
+          implementation(libs.spring.boot.starter.json)
+          implementation(libs.spring.boot.starter.data.jpa.test)
+          implementation(libs.spring.boot.starter.kafka.test)
           implementation(libs.spring.boot.testcontainers)
-          implementation(libs.spring.kafka.test)
           implementation(libs.testcontainers.junit.jupiter)
           implementation(libs.testcontainers.postgresql)
           implementation(libs.testcontainers.kafka)

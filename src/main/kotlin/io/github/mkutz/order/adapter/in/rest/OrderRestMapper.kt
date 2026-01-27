@@ -4,10 +4,8 @@ import io.github.mkutz.order.application.article.Article
 import io.github.mkutz.order.application.order.Order
 import io.github.mkutz.order.application.port.`in`.ToManageOrders
 import java.util.UUID
-import org.springframework.stereotype.Component
 
-@Component
-class OrderRestMapper {
+object OrderRestMapper {
 
   fun toOrderItemRequests(request: CreateOrderRequest): List<ToManageOrders.OrderItemRequest> {
     return request.items.map { item ->

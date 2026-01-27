@@ -1,17 +1,16 @@
 package io.github.mkutz.order.adapter.`in`.rest
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.mkutz.order.adapter.KafkaContainerConfiguration
 import io.github.mkutz.order.adapter.PostgresContainerConfiguration
-import io.github.mkutz.order.adapter.out.persistence.ArticleJpaEntity
-import io.github.mkutz.order.adapter.out.persistence.ArticleJpaRepository
+import io.github.mkutz.order.adapter.out.persistence.ArticleEntity
+import io.github.mkutz.order.adapter.out.persistence.ArticleRepository
 import java.math.BigDecimal
 import java.util.UUID
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
@@ -21,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import tools.jackson.databind.json.JsonMapper
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,17 +30,17 @@ class OrderControllerTest
 @Autowired
 constructor(
   private val mockMvc: MockMvc,
-  private val articleJpaRepository: ArticleJpaRepository,
-  private val objectMapper: ObjectMapper,
+  private val articleRepository: ArticleRepository,
+  private val jsonMapper: JsonMapper,
 ) {
 
-  private lateinit var testArticle: ArticleJpaEntity
+  private lateinit var testArticle: ArticleEntity
 
   @BeforeEach
   fun setUp() {
     testArticle =
-      articleJpaRepository.save(
-        ArticleJpaEntity(
+      articleRepository.save(
+        ArticleEntity(
           id = UUID.randomUUID(),
           name = "Test Article",
           priceAmount = BigDecimal("19.99"),
@@ -82,7 +82,7 @@ constructor(
         )
         .andReturn()
 
-    val orderId = objectMapper.readTree(createResponse.response.contentAsString).get("id").asText()
+    val orderId = jsonMapper.readTree(createResponse.response.contentAsString).get("id").asText()
 
     mockMvc
       .perform(get("/api/orders/$orderId"))
@@ -109,7 +109,7 @@ constructor(
         )
         .andReturn()
 
-    val orderId = objectMapper.readTree(createResponse.response.contentAsString).get("id").asText()
+    val orderId = jsonMapper.readTree(createResponse.response.contentAsString).get("id").asText()
 
     mockMvc
       .perform(delete("/api/orders/$orderId"))

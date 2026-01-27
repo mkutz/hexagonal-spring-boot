@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: hexagonal-order-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orders
+    username: orders
+    password: orders
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: ${app.kafka.consumer-group}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: io.github.mkutz.order.adapter.in.kafka
+  flyway:
+    enabled: true
+
+app:
+  kafka:
+    consumer-group: order-service
+    topics:
+      order-created: order.created
+      order-cancelled: order.cancelled
+      payment-confirmed: payment.confirmed
+      payment-confirmed-out: order.payment-confirmed

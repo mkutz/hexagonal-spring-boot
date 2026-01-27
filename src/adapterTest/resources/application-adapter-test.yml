@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  flyway:
+    enabled: true
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+
+app:
+  kafka:
+    consumer-group: order-service-test
+    topics:
+      order-created: order.created.test
+      order-cancelled: order.cancelled.test
+      payment-confirmed: payment.confirmed.test
+      payment-confirmed-out: order.payment-confirmed.test
+
+logging:
+  level:
+    io.github.mkutz.order: DEBUG

@@ -1,7 +1,7 @@
 [versions]
 assertj = "3.27.7"
 awaitility = "4.3.0"
-flyway = "11.20.3"
+flyway = "12.0.0"
 kotlin = "2.3.0"
 spring-boot = "4.0.2"
 spring-dependency-management = "1.1.7"

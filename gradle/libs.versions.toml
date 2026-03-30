@@ -3,7 +3,7 @@ assertj = "3.27.7"
 awaitility = "4.3.0"
 flyway = "12.1.1"
 kotlin = "2.3.10"
-spring-boot = "4.0.4"
+spring-boot = "4.0.5"
 spring-dependency-management = "1.1.7"
 testcontainers = "1.21.4"
 
